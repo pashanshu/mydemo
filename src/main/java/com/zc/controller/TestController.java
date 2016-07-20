@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,5 +40,27 @@ public class TestController {
 		return "success";
 	}	
 	
+	@ResponseBody
+	@RequestMapping(value="/getobject")
+	public User getObject(){
+		logger.info("we begin here");
+		User user = new User();
+		user.setUserName("zhanchang");
+		user.setUserAge("100");
+		return user;
+	}
 	
+	
+	@ResponseBody
+	@RequestMapping(value="/retobject", method = RequestMethod.POST)
+	public User retObject(@Valid @RequestBody User user,BindingResult result){
+		
+		if (result.hasErrors()) {
+            return user;
+        }
+		logger.info("we begin here");
+		user.setUserName(user.getUserName()+"001");
+		user.setUserAge("200");
+		return user;
+	}
 }
