@@ -1,6 +1,11 @@
 package com.zc.model;
 
 import java.sql.Timestamp;
+/**
+ * 用户模型
+ * 
+ * @author zhanchang
+ **/
 
 public class User {
 

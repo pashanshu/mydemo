@@ -1,6 +1,8 @@
 package com.zc.controller;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zc.model.User;
+import com.zc.service.TestService;
 
 /**
  * test controller
@@ -25,7 +28,12 @@ import com.zc.model.User;
 @RequestMapping(value="/test")
 public class TestController {
     
+    @Resource
+    private TestService testService;
 	private static Logger logger = Logger.getLogger(TestController.class);
+	
+	
+	
 	
 	@RequestMapping(value="/querymemberinfo")
 	public String queryMemberInfo(){
@@ -62,5 +70,15 @@ public class TestController {
 		user.setUserName(user.getUserName()+"001");
 		user.setUserAge("200");
 		return user;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/getuserinfo", method = RequestMethod.GET)
+	public User getUserInfo(){
+		
+		logger.info("we begin here");
+		return testService.queryByName("abcd");
+		
 	}
 }
