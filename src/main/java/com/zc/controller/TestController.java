@@ -29,7 +29,7 @@ import com.zc.service.TestService;
 public class TestController {
     
     @Resource
-    private TestService testService;
+   private TestService testService;
 	private static Logger logger = Logger.getLogger(TestController.class);
 	
 	

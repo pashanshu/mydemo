@@ -1,7 +1,5 @@
 package com.zc.utils;
 
-import javax.servlet.http.HttpSession;
-
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -26,7 +24,7 @@ public class AspectAdvice {
  //即切点集合是：aop.annotation包下所有类所有方法
 //第一个* 代表返回值类型
 //如果要设置多个切点可以使用 || 拼接
-@Pointcut("execution(* com.zc.controller.*(..))")
+@Pointcut("execution(* com.zc.controller.TestController.*(..))")
  public void anyMethod() {
  }
 
@@ -37,8 +35,8 @@ public class AspectAdvice {
      System.out.println("===========进入before advice============ \n");
 
      System.out.print("准备在" + jp.getTarget().getClass() + "对象上用");
-     System.out.print(jp.getSignature().getName() + "方法进行对 '");
-     System.out.print(jp.getArgs()[0] + "'进行删除！\n\n");
+//     System.out.print(jp.getSignature().getName() + "方法进行对 '");
+//     System.out.print(jp.getArgs()[0] + "'进行删除！\n\n");
 
      System.out.println("要进入切入点方法了 \n");
  }
@@ -49,9 +47,9 @@ public class AspectAdvice {
      System.out.println("==========进入after advice=========== \n");
      System.out.println("切入点方法执行完了 \n");
 
-     System.out.print(jp.getArgs()[0] + "在");
-     System.out.print(jp.getTarget().getClass() + "对象上被");
-     System.out.print(jp.getSignature().getName() + "方法删除了");
+//     System.out.print(jp.getArgs()[0] + "在");
+//     System.out.print(jp.getTarget().getClass() + "对象上被");
+//     System.out.print(jp.getSignature().getName() + "方法删除了");
      System.out.print("只留下：" + result + "\n\n");
  }
 
