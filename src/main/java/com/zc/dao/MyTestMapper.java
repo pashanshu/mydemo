@@ -15,6 +15,8 @@ public interface MyTestMapper {
     int insertSelective(MyTest record);
 
     List<MyTest> selectByExample(MyTestExample example);
+    
+    List<MyTest> selectByName(String userName);
 
     int updateByExampleSelective(@Param("record") MyTest record, @Param("example") MyTestExample example);
 

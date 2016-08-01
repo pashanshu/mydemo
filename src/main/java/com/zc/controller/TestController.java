@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.zc.dao.MyTestMapper;
+import com.zc.model.MyTest;
 import com.zc.model.User;
 import com.zc.service.TestService;
 
@@ -28,10 +31,13 @@ import com.zc.service.TestService;
 @RequestMapping(value="/test")
 public class TestController {
     
-    @Resource
+   @Resource
    private TestService testService;
-	private static Logger logger = Logger.getLogger(TestController.class);
+   @Resource
+	private MyTestMapper myTestMapper;
 	
+	private static Logger logger = Logger.getLogger(TestController.class);
+
 	
 	
 	
@@ -76,9 +82,17 @@ public class TestController {
 	@ResponseBody
 	@RequestMapping(value="/getuserinfo", method = RequestMethod.GET)
 	public User getUserInfo(){
-		
 		logger.info("we begin here");
 		return testService.queryByName("abcd");
-		
 	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/getmytestinfo", method = RequestMethod.GET)
+	public MyTest getMytestInfo(){
+		logger.info("mytest is begin!");
+		MyTest m = myTestMapper.selectByName("zc").get(0);
+		return m;
+	}
+	
 }
