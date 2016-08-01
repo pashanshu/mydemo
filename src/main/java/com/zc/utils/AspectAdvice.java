@@ -35,7 +35,7 @@ public class AspectAdvice {
      System.out.println("===========进入before advice============ \n");
 
 //     System.out.print("准备在" + jp.getTarget().getClass() + "对象上用");
-//     System.out.print(jp.getSignature().getName() + "方法进行对 '");
+     System.out.print(jp.getSignature().getName() + "方法进行对 '");
 //     System.out.print(jp.getArgs()[0] + "'进行删除！\n\n");
 
      System.out.println("要进入切入点方法了 \n");
