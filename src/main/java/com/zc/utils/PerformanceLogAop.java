@@ -28,7 +28,8 @@ public class PerformanceLogAop {
     ThreadLocal<Long> time=new ThreadLocal<Long>();
     ThreadLocal<String> tag=new ThreadLocal<String>();
      
-    @Pointcut("@annotation(com.zc.annotation.PerformanceLog)")
+ //   @Pointcut("@annotation(com.zc.annotation.PerformanceLog)")
+    @Pointcut("execution(* com.zc.controller.TestController.*(..))")
     public void anyMethod() {
     }
     
@@ -36,7 +37,7 @@ public class PerformanceLogAop {
      * 在所有标注@Log的地方切入
      * @param joinPoint
      */
-    @Before("anyMethod")
+//    @Before("anyMethod()")
     public void beforeExec(JoinPoint joinPoint){
          
         time.set(System.currentTimeMillis());
@@ -49,24 +50,32 @@ public class PerformanceLogAop {
         System.out.println(method.getAnnotation(PerformanceLog.class).ResponseClass()+"标记"+tag.get());
     }
      
-    @After("anyMethod")
+//    @After("anyMethod()")
     public void afterExec(JoinPoint joinPoint){
         MethodSignature ms=(MethodSignature) joinPoint.getSignature();
         Method method=ms.getMethod();
         System.out.println("标记为"+tag.get()+"的方法"+method.getName()+"运行消耗"+(System.currentTimeMillis()-time.get())+"ms");
     }
      
-    @Around("anyMethod")
-    public void aroundExec(JoinPoint joinPoint,ProceedingJoinPoint pjp) throws Throwable{
+    @Around(value="anyMethod() && @annotation(log)")
+    public Object aroundExec(ProceedingJoinPoint pjp,PerformanceLog log) throws Throwable{
         logger.info("=========================around is begin ===========================");
         String requestClass="";
         String requestMethod="";
         String responseClass="";
         String responseMethod="";
         long beginTime=System.currentTimeMillis();
-        pjp.proceed();
+        Object result=pjp.proceed();
         long endTime= System.currentTimeMillis();
-        joinPoint.getSignature().getName();
+        if(true){
+        	requestClass=log.RequestClass();
+        	requestMethod=log.RequestMethod();
+        	responseClass=pjp.getSignature().getDeclaringTypeName();
+        	responseMethod=pjp.getSignature().getName();
+        }
+          logger.info("requestClass==>"+requestClass+"\t"+"requestMethod==>"+requestMethod+"\t"+"responseClass==>"+responseClass+"\t"+"responseMethod==>"+responseMethod+
+        		  "\t"+"beginTime==>"+beginTime+"\t"+"endTime==>"+endTime+"\t"+"total==>"+(endTime-beginTime));
+          return result;
     }
      
     private void info(JoinPoint joinPoint){

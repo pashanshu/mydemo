@@ -20,6 +20,7 @@ import com.zc.dao.MyTestMapper;
 import com.zc.model.MyTest;
 import com.zc.model.User;
 import com.zc.service.TestService;
+import com.zc.annotation.PerformanceLog;
 
 /**
  * test controller
@@ -89,6 +90,7 @@ public class TestController {
 	
 	@ResponseBody
 	@RequestMapping(value="/getmytestinfo", method = RequestMethod.GET)
+	@PerformanceLog(RequestClass="com.citic.test",RequestMethod="myTestMethod",ResponseClass="123",ResponseMethod="456")
 	public MyTest getMytestInfo(){
 		logger.info("mytest is begin!");
 		MyTest m = myTestMapper.selectByName("zc").get(0);
