@@ -24,13 +24,13 @@ public class AspectAdvice {
  //即切点集合是：aop.annotation包下所有类所有方法
 //第一个* 代表返回值类型
 //如果要设置多个切点可以使用 || 拼接
-@Pointcut("execution(* com.zc.controller.TestController.*(..))")
+//@Pointcut("execution(* com.zc.controller.TestController.*(..))")
  public void anyMethod() {
  }
 
  //前置通知
 //在切点方法集合执行前，执行前置通知
-@Before("anyMethod()")
+//@Before("anyMethod()")
  public void doBefore(JoinPoint jp) {
      System.out.println("===========进入before advice============ \n");
 
@@ -42,7 +42,7 @@ public class AspectAdvice {
  }
 
 // 后置通知  
-@AfterReturning(value = "anyMethod()", returning = "result")
+//@AfterReturning(value = "anyMethod()", returning = "result")
  public void doAfter(JoinPoint jp, String result) {
      System.out.println("==========进入after advice=========== \n");
      System.out.println("切入点方法执行完了 \n");
@@ -56,7 +56,7 @@ public class AspectAdvice {
  // 环绕通知（##环绕通知的方法中一定要有ProceedingJoinPoint 参数,与
  //Filter中的  doFilter方法类似）
 
-@Around("anyMethod()")
+//@Around("anyMethod()")
  public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
      System.out.println("===========进入around环绕方法！=========== \n");
      // 调用目标方法之前执行的动作
@@ -80,7 +80,7 @@ public class AspectAdvice {
 
  // 异常通知
 
-@AfterThrowing(value = "anyMethod()", throwing = "e")
+//@AfterThrowing(value = "anyMethod()", throwing = "e")
  public void doThrow(JoinPoint jp, Throwable e) {
      System.out.println("删除出错啦");
  }

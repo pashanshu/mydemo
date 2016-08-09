@@ -29,7 +29,7 @@ public class PerformanceLogAop {
     ThreadLocal<String> tag=new ThreadLocal<String>();
      
  //   @Pointcut("@annotation(com.zc.annotation.PerformanceLog)")
-    @Pointcut("execution(* com.zc.controller.TestController.*(..))")
+    @Pointcut("execution(* com.zc.controller.*Controller.*(..))")
     public void anyMethod() {
     }
     
@@ -37,9 +37,9 @@ public class PerformanceLogAop {
      * 在所有标注@Log的地方切入
      * @param joinPoint
      */
-//    @Before("anyMethod()")
+    @Before("anyMethod()")
     public void beforeExec(JoinPoint joinPoint){
-         
+    	logger.info("=========================mytest before is begin ===========================");
         time.set(System.currentTimeMillis());
         tag.set(UUID.randomUUID().toString());
          
@@ -48,18 +48,21 @@ public class PerformanceLogAop {
         MethodSignature ms=(MethodSignature) joinPoint.getSignature();
         Method method=ms.getMethod();
         System.out.println(method.getAnnotation(PerformanceLog.class).ResponseClass()+"标记"+tag.get());
+        logger.info("=========================mytest before is end ===========================");
     }
      
-//    @After("anyMethod()")
+    @After("anyMethod()")
     public void afterExec(JoinPoint joinPoint){
+    	logger.info("=========================mytest after is begin ===========================");
         MethodSignature ms=(MethodSignature) joinPoint.getSignature();
         Method method=ms.getMethod();
         System.out.println("标记为"+tag.get()+"的方法"+method.getName()+"运行消耗"+(System.currentTimeMillis()-time.get())+"ms");
+        logger.info("=========================mytest after is end ===========================");
     }
      
     @Around(value="anyMethod() && @annotation(log)")
     public Object aroundExec(ProceedingJoinPoint pjp,PerformanceLog log) throws Throwable{
-        logger.info("=========================around is begin ===========================");
+        logger.info("=========================mytest around is begin ===========================");
         String requestClass="";
         String requestMethod="";
         String responseClass="";
@@ -75,6 +78,7 @@ public class PerformanceLogAop {
         }
           logger.info("requestClass==>"+requestClass+"\t"+"requestMethod==>"+requestMethod+"\t"+"responseClass==>"+responseClass+"\t"+"responseMethod==>"+responseMethod+
         		  "\t"+"beginTime==>"+beginTime+"\t"+"endTime==>"+endTime+"\t"+"total==>"+(endTime-beginTime));
+          logger.info("=========================mytest around is end ===========================");
           return result;
     }
      
